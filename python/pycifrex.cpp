@@ -92,7 +92,52 @@ struct VecOfTuplesToListOfTuples
         {
             boost::python::list* l2 = new boost::python::list();
             (*l2).append(std::get<0>(vec[i]));
+            (*l).append(*l2);
+        }
+
+        return l->ptr();
+    }
+
+    static boost::python::list* convert2(const std::vector<T>& vec)
+    {
+        boost::python::list* l = new boost::python::list();
+        for(size_t i = 0; i < vec.size(); i++)
+        {
+            boost::python::list* l2 = new boost::python::list();
+            (*l2).append(std::get<0>(vec[i]));
+            (*l).append(*l2);
+        }
+
+        return l;
+    }
+};
+
+struct FileMatchesConverter
+{
+    static boost::python::list* convert2(Matches const& vec)
+    {
+        boost::python::list* l = new boost::python::list();
+        for(size_t i = 0; i < vec.size(); i++)
+        {
+            boost::python::list* l2 = new boost::python::list();
+            (*l2).append(std::get<0>(vec[i]));
             (*l2).append(std::get<1>(vec[i]));
+            (*l2).append(std::get<2>(vec[i]));
+            (*l).append(*l2);
+        }
+
+        return l;
+    }
+
+    static PyObject* convert(FileMatches const& files)
+    {
+        boost::python::list* l = new boost::python::list();
+        for(size_t i = 0; i < files.size(); i++)
+        {
+            boost::python::list* l2 = new boost::python::list();
+            (*l2).append(std::get<0>(files[i]));
+            (*l2).append(*convert2(std::get<1>(files[i])));
+
             (*l).append(*l2);
         }
 
@@ -102,7 +147,7 @@ struct VecOfTuplesToListOfTuples
 
 BOOST_PYTHON_MODULE(libpycifrex)
 {
-    to_python_converter<Matches, VecOfTuplesToListOfTuples<Match> >();
+    to_python_converter<FileMatches, FileMatchesConverter>();
     to_python_converter<Extensions, VecToList<std::string> >();
 
     iterable_converter()

@@ -11,7 +11,7 @@ public:
     Ex();
     Ex(std::string regex);
 
-    RegexMatches match(std::string const& data) const;
+    Matches match(std::string const& data) const;
 
 private:
     std::shared_ptr<re2::RE2> re;

@@ -21,33 +21,33 @@ bool Engine::ok() const
     return !exs.empty();
 }
 
-RegexMatches Engine::searchInFile(std::string const& data) const
+Matches Engine::searchInFile(std::string const& data) const
 {
-    RegexMatches matches;
+    Matches matches;
     for (Vex const& vex : exs)
     {
-        RegexMatches const vexMatches = vex.match(data);
+        Matches const vexMatches = vex.match(data);
         matches.insert(matches.end(), vexMatches.begin(), vexMatches.end());
     }
     return matches;
 }
 
-Matches Engine::search(std::string const& inputPath, Extensions const& extensions) const
+FileMatches Engine::search(std::string const& inputPath, Extensions const& extensions) const
 {
-    Matches matches;
+    FileMatches matches;
     if (ok())
     {
         for (string const& filePath : FileLoader::getFilePaths(inputPath, extensions))
         {
-            cout << filePath << endl;
             ifstream file;
             FileLoader::openFile(filePath, file);
             string data((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
 
-            RegexMatches const newMatches = searchInFile(data);
-            for (string const& match : newMatches)
+            Matches const newMatches = searchInFile(data);
+            if (!newMatches.empty())
             {
-                matches.emplace_back(filePath, match);
+                cout << filePath << endl;
+                matches.emplace_back(filePath, newMatches);
             }
         }
     }

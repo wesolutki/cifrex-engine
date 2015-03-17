@@ -2,10 +2,10 @@
 #include <string>
 #include <tuple>
 
-using RegexMatches = std::vector<std::string>;
-
-using Match = std::tuple<std::string, std::string>;
-using Matches= std::vector<Match>;
+using Match = std::tuple<unsigned int, unsigned int, std::string>;
+using Matches = std::vector<Match>;
+using FileMatch = std::tuple<std::string, Matches>;
+using FileMatches = std::vector<FileMatch>;
 
 using Extensions = std::vector<std::string, std::allocator<std::string>>;
 

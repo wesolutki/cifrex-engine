@@ -1,5 +1,6 @@
 #include "Ex.hpp"
 
+#include <algorithm>
 #include <assert.h>
 #include <iostream>
 #include <memory>
@@ -24,9 +25,9 @@ Ex::Ex(string regex)
     }
 }
 
-RegexMatches Ex::match(string const& data) const
+Matches Ex::match(string const& data) const
 {
-    RegexMatches output;
+    Matches output;
 
     StringPiece input(data);
     const char* p = input.data();
@@ -41,8 +42,8 @@ RegexMatches Ex::match(string const& data) const
     {
         for (pair<string, int> named : re->NamedCapturingGroups())
         {
-
-            output.push_back(strings[named.second-1]);
+            unsigned int const offset = (input.data() - p);
+            output.emplace_back(1 + std::count(data.begin(), (data.begin() + offset), '\n'), offset, strings[named.second-1]);
             cout << "Value for capturing group at char " << (input.data() - p) << " named " << named.first << " is " << strings[named.second-1] << endl;
         }
     }
