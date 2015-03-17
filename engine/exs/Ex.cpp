@@ -24,9 +24,9 @@ Ex::Ex(string regex)
     }
 }
 
-vector<string> Ex::match(string const& data) const
+RegexMatches Ex::match(string const& data) const
 {
-    std::vector<string> output;
+    RegexMatches output;
 
     StringPiece input(data);
 

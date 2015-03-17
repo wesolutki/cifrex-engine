@@ -10,7 +10,7 @@ class Options
 public:
     Options(int argc, char ** argv);
     std::string const& getInputPath() const;
-    std::vector<std::string> getExtensions() const;
+    Extensions getExtensions() const;
     Exs const& getExs() const;
 
 private:
@@ -25,7 +25,7 @@ private:
     boost::program_options::variables_map vm;
 
     std::string configFilename, inputPath;
-    std::vector<std::string> extensions;
+    Extensions extensions;
     std::string v1, v2, v3, t1, t2, t3, f1, f2, f3;
     Exs exs;
 };

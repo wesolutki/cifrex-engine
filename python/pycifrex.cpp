@@ -3,7 +3,10 @@
 
 #include <Engine.hpp>
 
+#include <iostream>
+
 using namespace boost::python;
+using namespace std;
 
 struct iterable_converter
 {
@@ -70,6 +73,7 @@ struct VecToList
 {
     static PyObject* convert(const std::vector<T>& vec)
     {
+        cout << "VecToList" << endl;
         boost::python::list* l = new boost::python::list();
         for(size_t i = 0; i < vec.size(); i++)
             (*l).append(vec[i]);
@@ -78,12 +82,32 @@ struct VecToList
     }
 };
 
+template<class T>
+struct VecOfTuplesToListOfTuples
+{
+    static PyObject* convert(const std::vector<T>& vec)
+    {
+        boost::python::list* l = new boost::python::list();
+        for(size_t i = 0; i < vec.size(); i++)
+        {
+            boost::python::list* l2 = new boost::python::list();
+            (*l2).append(std::get<0>(vec[i]));
+            (*l2).append(std::get<1>(vec[i]));
+            (*l).append(*l2);
+        }
+
+        return l->ptr();
+    }
+};
+
 BOOST_PYTHON_MODULE(libpycifrex)
 {
-    to_python_converter<std::vector<std::string,class std::allocator<std::string> >, VecToList<std::string> >();
+    to_python_converter<Matches, VecOfTuplesToListOfTuples<Match> >();
+    to_python_converter<Extensions, VecToList<std::string> >();
 
     iterable_converter()
-            .from_python<std::vector<std::string> >()
+            .from_python<Matches>()
+            .from_python<Extensions>()
             .from_python<std::vector<Vex> >()
             ;
 

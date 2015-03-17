@@ -53,7 +53,7 @@ string const& Options::getInputPath() const
     return inputPath;
 }
 
-vector<string> Options::getExtensions() const
+Extensions Options::getExtensions() const
 {
     return extensions;
 }
@@ -109,7 +109,7 @@ void Options::configureOptions()
               "configuration file path")
         ("input-path", po::value<string>(&inputPath),
             "input file/directory path")
-        ("extensions,e", po::value<vector<string> >(&extensions)->multitoken(),
+        ("extensions,e", po::value<Extensions>(&extensions)->multitoken(),
             "extensions of files (ex. .c or .h")
         ("lang,l", "processing language, possible values: c++, java")
         ;

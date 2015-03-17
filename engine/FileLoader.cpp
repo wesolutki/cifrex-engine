@@ -35,9 +35,9 @@ bool FileLoader::openFile(string const& filename, std::ifstream & file)
     return false;
 }
 
-vector<string> FileLoader::getFilePaths(string const& path, vector<string> const& extensions)
+Files FileLoader::getFilePaths(string const& path, Extensions const& extensions)
 {
-    vector<string> results;
+    Files results;
     fs::path boostPath(path);
     fs::recursive_directory_iterator itr(boostPath);
     while (itr != fs::recursive_directory_iterator())

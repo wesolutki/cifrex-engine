@@ -18,6 +18,7 @@ SET (SRC
     ./Engine.hpp
     ./FileLoader.cpp
     ./FileLoader.hpp
+    ./Types.hpp
     ${EXS}
 )
 

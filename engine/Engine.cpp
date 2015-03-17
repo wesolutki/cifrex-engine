@@ -2,7 +2,6 @@
 
 #include "FileLoader.hpp"
 
-#include <string>
 #include <fstream>
 #include <iostream>
 
@@ -22,9 +21,9 @@ bool Engine::ok() const
     return !exs.empty();
 }
 
-vector<string> Engine::search(std::string const& inputPath, std::vector<std::string> const& extensions) const
+Matches Engine::search(std::string const& inputPath, Extensions const& extensions) const
 {
-    vector<string> matches;
+    Matches matches;
     if (ok())
     {
         for (string const& filePath : FileLoader::getFilePaths(inputPath, extensions))
@@ -35,12 +34,14 @@ vector<string> Engine::search(std::string const& inputPath, std::vector<std::str
 
             for (Vex const& vex : exs)
             {
-                vector<string> const vexMatches = vex.match(data);
-                for (string const& v : vexMatches)
-                    matches.push_back(v);
+                RegexMatches const vexMatches = vex.match(data);
+                for (string const& match : vexMatches)
+                {
+                    matches.emplace_back(filePath, match);
+                }
             }
         }
     }
-    cout<<"matches count: " << matches.size() << endl;
+    cout<<"Matches count: " << matches.size() << endl;
     return matches;
 }
