@@ -1,15 +1,13 @@
 # cifrex-engine
 You need:
 - cmake
-- g++ (withj c++11 support)
+- g++ (with c++11 support)
 - re2
 - boost (program_options, filesystem, python)
 - python (now only 2.7)
 - pip (or easy_install)
 - python packages (sudo pip install package):
-    - Werkzeug
-    - json-rpc
-    - requests
+    - pyjsonrpc
 
 Download some library you want to check, to repos directory
 ex.
@@ -29,5 +27,7 @@ To run client example request:
 python2 example-client/client.py
 
 # TODOs
-- https://pypi.python.org/pypi/python-jsonrpc
+- include re2 deployment
+- build configuration tool
+- add python3 support
 
