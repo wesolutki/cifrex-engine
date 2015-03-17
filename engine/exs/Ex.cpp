@@ -29,6 +29,7 @@ RegexMatches Ex::match(string const& data) const
     RegexMatches output;
 
     StringPiece input(data);
+    const char* p = input.data();
 
     std::vector<string> strings(re->NumberOfCapturingGroups());
     RE2::Arg argv[3];
@@ -40,8 +41,9 @@ RegexMatches Ex::match(string const& data) const
     {
         for (pair<string, int> named : re->NamedCapturingGroups())
         {
+
             output.push_back(strings[named.second-1]);
-            cout << "Value for capturing group named " << named.first << " is " << strings[named.second-1] << endl;
+            cout << "Value for capturing group at char " << (input.data() - p) << " named " << named.first << " is " << strings[named.second-1] << endl;
         }
     }
     return std::move(output);

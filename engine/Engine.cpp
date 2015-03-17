@@ -28,6 +28,7 @@ Matches Engine::search(std::string const& inputPath, Extensions const& extension
     {
         for (string const& filePath : FileLoader::getFilePaths(inputPath, extensions))
         {
+            cout << filePath << endl;
             ifstream file;
             FileLoader::openFile(filePath, file);
             string data((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
