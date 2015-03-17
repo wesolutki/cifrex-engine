@@ -6,6 +6,8 @@ from jsonrpc import JSONRPCResponseManager, dispatcher
 
 import libpycifrex
 
+import datetime
+
 def prepare_engine(kwargs):
     def load_params(name, max_number, kwargs):
         def load_pattern(regexes):
@@ -23,6 +25,7 @@ def run_engine(engine, path, extensions):
 
 @dispatcher.add_method
 def foobar(**kwargs):
+    time1 = datetime.datetime.now()
     print('\n\n')
     print("Received params: " + str(kwargs))
 
@@ -35,6 +38,9 @@ def foobar(**kwargs):
     results = run_engine(engine, directory, extensions)
 
     print("Not parsed params: " + str(kwargs))
+    time2 = datetime.datetime.now()
+    elapsedTime = time2 - time1
+    print("Elapsed: " + str(elapsedTime.total_seconds()) + " seconds")
     return results
 
 @Request.application
