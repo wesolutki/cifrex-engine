@@ -28,3 +28,6 @@ python2 server.py
 To run client example request:
 python2 example-client/client.py
 
+# TODOs
+- https://pypi.python.org/pypi/python-jsonrpc
+
