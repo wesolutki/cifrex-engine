@@ -43,8 +43,9 @@ Matches Ex::match(string const& data) const
         for (pair<string, int> named : re->NamedCapturingGroups())
         {
             unsigned int const offset = (input.data() - p);
-            output.emplace_back(1 + std::count(data.begin(), (data.begin() + offset), '\n'), offset, strings[named.second-1]);
-            cout << "Value for capturing group at char " << (input.data() - p) << " named " << named.first << " is " << strings[named.second-1] << endl;
+            unsigned int const lineNumber = 1 + std::count(data.begin(), (data.begin() + offset), '\n');
+            output.emplace_back(lineNumber, offset, strings[named.second-1]);
+            cout << "[" << lineNumber << ", " << offset << "] " << named.first << " -> " << strings[named.second-1] << endl;
         }
     }
     return std::move(output);
