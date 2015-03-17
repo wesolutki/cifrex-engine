@@ -120,5 +120,6 @@ BOOST_PYTHON_MODULE(libpycifrex)
             .def(init<std::vector<Vex> const&>())
             .def("ok", &Engine::ok)
             .def("search", &Engine::search)
+            .def("searchInFile", &Engine::searchInFile)
             ;
 }

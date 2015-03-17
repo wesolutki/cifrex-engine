@@ -30,7 +30,9 @@ def main():
     response = requests.post(
         url, data=json.dumps(payload), headers=headers).json()
 
-    print(response)
+    import pprint
+    pp = pprint.PrettyPrinter(indent=2)
+    pp.pprint(response)
 
 if __name__ == "__main__":
     main()

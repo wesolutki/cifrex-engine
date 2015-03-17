@@ -21,6 +21,17 @@ bool Engine::ok() const
     return !exs.empty();
 }
 
+RegexMatches Engine::searchInFile(std::string const& data) const
+{
+    RegexMatches matches;
+    for (Vex const& vex : exs)
+    {
+        RegexMatches const vexMatches = vex.match(data);
+        matches.insert(matches.end(), vexMatches.begin(), vexMatches.end());
+    }
+    return matches;
+}
+
 Matches Engine::search(std::string const& inputPath, Extensions const& extensions) const
 {
     Matches matches;
@@ -33,13 +44,10 @@ Matches Engine::search(std::string const& inputPath, Extensions const& extension
             FileLoader::openFile(filePath, file);
             string data((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
 
-            for (Vex const& vex : exs)
+            RegexMatches const newMatches = searchInFile(data);
+            for (string const& match : newMatches)
             {
-                RegexMatches const vexMatches = vex.match(data);
-                for (string const& match : vexMatches)
-                {
-                    matches.emplace_back(filePath, match);
-                }
+                matches.emplace_back(filePath, match);
             }
         }
     }
