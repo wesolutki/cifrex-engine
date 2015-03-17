@@ -1,15 +1,10 @@
-import requests
-import json
+import pyjsonrpc
 
+if __name__ == "__main__":
 
-def main():
-    url = "http://localhost:4000/jsonrpc"
-    headers = {'content-type': 'application/json'}
+    http_client = pyjsonrpc.HttpClient(url = "http://localhost:4000",)
 
-    payload = {
-        "method": "foobar",
-        "params": {
-            "execLog": True,
+    payload = {"execLog": True,
             "printOutput": True,
             "toDb": True,
             "resultName": "thats my name",
@@ -22,17 +17,7 @@ def main():
             "extensions": [".h", ".c"],
             "katalog": "../repos/",
             "value1": "(?P<v1>strcpy.*\))",
-        },
-        "jsonrpc": "2.0",
-        "id": 0,
-    }
+            }
 
-    response = requests.post(
-        url, data=json.dumps(payload), headers=headers).json()
+    print(http_client.call("search", payload))
 
-    import pprint
-    pp = pprint.PrettyPrinter(indent=2)
-    pp.pprint(response)
-
-if __name__ == "__main__":
-    main()

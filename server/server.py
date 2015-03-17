@@ -1,11 +1,5 @@
-from werkzeug.wrappers import Request, Response
-from werkzeug.serving import run_simple
-
-
-from jsonrpc import JSONRPCResponseManager, dispatcher
-
+import pyjsonrpc
 import libpycifrex
-
 import datetime
 
 def prepare_engine(kwargs):
@@ -23,8 +17,7 @@ def prepare_engine(kwargs):
 def run_engine(engine, path, extensions):
     return engine.search(path, extensions)
 
-@dispatcher.add_method
-def foobar(**kwargs):
+def searchRequest(kwargs):
     time1 = datetime.datetime.now()
     print('\n\n')
     print("Received params: " + str(kwargs))
@@ -43,13 +36,17 @@ def foobar(**kwargs):
     print("Elapsed: " + str(elapsedTime.total_seconds()) + " seconds")
     return results
 
-@Request.application
-def application(request):
-    response = JSONRPCResponseManager.handle(
-        request.data, dispatcher)
-    return Response(response.json, mimetype='application/json')
+class RequestHandler(pyjsonrpc.HttpRequestHandler):
 
+    @pyjsonrpc.rpcmethod
+    def search(self, kwargs):
+        """Test method"""
+        print(kwargs)
+        return searchRequest(kwargs)
 
 if __name__ == '__main__':
-    run_simple('localhost', 4000, application)
+    http_server = pyjsonrpc.ThreadingHttpServer(
+        server_address = ('localhost', 4000),
+        RequestHandlerClass = RequestHandler)
+    http_server.serve_forever()
 
