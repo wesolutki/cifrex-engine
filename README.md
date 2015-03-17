@@ -11,6 +11,13 @@ You need:
     - json-rpc
     - requests
 
+Download some library you want to check, to repos directory
+ex.
+mkdir repos
+cd repos
+curl http://ftp.piotrkosoft.net/pub/mirrors/ftp.apache.org//httpd/httpd-2.4.12.tar.bz2 -o httpd-2.4.12.tar.bz2
+tar -xjvf httpd-2.4.12.tar.bz2
+
 Run build-engine.sh
 it will compile everything and start server
 
