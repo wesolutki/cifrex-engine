@@ -6,8 +6,7 @@ from memoized import memoized
 
 @memoized
 def load_file(path):
-    print("1\n")
-    return open('path', 'r').read()
+    return open(path, 'r').read()
 
 def load_directory_files(path, extensions):
     import fnmatch
@@ -34,8 +33,18 @@ def prepare_engine(kwargs):
     return engine
 
 def run_engine(engine, directory, extensions):
-    print("Run engine:" + str(engine))
-    return [engine.search(path) for path in load_directory_files(directory, extensions)]
+    print("Run engine (file to c++)): " + str(engine))
+    res = []
+    for path in load_directory_files(directory, extensions):
+        v = engine.searchInFile(load_file(path))#open(path, 'r').read())
+        if v:
+            res.append((path, v))
+    print("Matches count: %d" % len(res))
+    return res
+
+def run_engine_scan(engine, directory, extensions):
+    print("Run engine (directory to c++)): " + str(engine))
+    return engine.search(directory, extensions)
 
 def searchRequest(kwargs):
     time1 = datetime.datetime.now()
@@ -62,7 +71,11 @@ class RequestHandler(pyjsonrpc.HttpRequestHandler):
     def search(self, kwargs):
         """Test method"""
         print(kwargs)
-        return searchRequest(kwargs)
+        try:
+            return searchRequest(kwargs)
+        except:
+            print "Unexpected error:", sys.exc_info()[0]
+            raise
 
 if __name__ == '__main__':
     http_server = pyjsonrpc.ThreadingHttpServer(

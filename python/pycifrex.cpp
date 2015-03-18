@@ -92,6 +92,8 @@ struct VecOfTuplesToListOfTuples
         {
             boost::python::list* l2 = new boost::python::list();
             (*l2).append(std::get<0>(vec[i]));
+            (*l2).append(std::get<1>(vec[i]));
+            (*l2).append(std::get<2>(vec[i]));
             (*l).append(*l2);
         }
 
@@ -148,6 +150,7 @@ struct FileMatchesConverter
 BOOST_PYTHON_MODULE(libpycifrex)
 {
     to_python_converter<FileMatches, FileMatchesConverter>();
+    to_python_converter<Matches, VecOfTuplesToListOfTuples<Match>>();
     to_python_converter<Extensions, VecToList<std::string> >();
 
     iterable_converter()
