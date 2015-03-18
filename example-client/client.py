@@ -14,7 +14,7 @@ if __name__ == "__main__":
             "filtrName": "moja nazwa filtru",
             "filtrDescription": "a to opis",
             "filtrId": 753,
-            "extensions": [".h", ".c"],
+            "extensions": ["*.h", "*.c"],
             "katalog": "../repos/",
             "value1": "(?P<v1>strcpy.*\))",
             }

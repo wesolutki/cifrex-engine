@@ -2,6 +2,25 @@ import pyjsonrpc
 import libpycifrex
 import datetime
 
+from memoized import memoized
+
+@memoized
+def load_file(path):
+    print("1\n")
+    return open('path', 'r').read()
+
+def load_directory_files(path, extensions):
+    import fnmatch
+    import os
+
+    matches = []
+    for root, dirnames, filenames in os.walk(path):
+        for extension in extensions:
+            for filename in fnmatch.filter(filenames, extension):
+                matches.append(os.path.join(root, filename))
+    print("Loaded %d file paths" % len(matches))
+    return matches;
+
 def prepare_engine(kwargs):
     def load_params(name, max_number, kwargs):
         def load_pattern(regexes):
@@ -14,8 +33,9 @@ def prepare_engine(kwargs):
     engine = libpycifrex.Engine(values)
     return engine
 
-def run_engine(engine, path, extensions):
-    return engine.search(path, extensions)
+def run_engine(engine, directory, extensions):
+    print("Run engine:" + str(engine))
+    return [engine.search(path) for path in load_directory_files(directory, extensions)]
 
 def searchRequest(kwargs):
     time1 = datetime.datetime.now()
