@@ -12,4 +12,5 @@ INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 add_executable(console ${SRC})
 target_link_libraries(console LINK_PUBLIC engine ${Boost_LIBRARIES} libre2.so)
 
-INSTALL_TARGETS(/bin console)
+install(TARGETS console
+        RUNTIME DESTINATION bin)

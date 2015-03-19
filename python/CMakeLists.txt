@@ -8,4 +8,5 @@ ADD_LIBRARY(pycifrex SHARED pycifrex.cpp)
 target_include_directories(pycifrex PUBLIC ${ENGINE_SRC})
 TARGET_LINK_LIBRARIES(pycifrex engine ${Boost_LIBRARIES} libre2.so)
 
-INSTALL_TARGETS(/lib console)
+install(TARGETS pycifrex
+        LIBRARY DESTINATION lib)

@@ -27,5 +27,7 @@ INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 add_library(engine ${SRC})
 target_include_directories(engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-INSTALL_TARGETS(/bin engine)
-INSTALL_TARGETS(/lib engine)
+install(TARGETS engine
+        RUNTIME DESTINATION bin
+        LIBRARY DESTINATION lib
+        ARCHIVE DESTINATION lib/static)
