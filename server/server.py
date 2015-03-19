@@ -71,11 +71,7 @@ class RequestHandler(pyjsonrpc.HttpRequestHandler):
     def search(self, kwargs):
         """Test method"""
         print(kwargs)
-        try:
-            return searchRequest(kwargs)
-        except:
-            print "Unexpected error:", sys.exc_info()[0]
-            raise
+        return searchRequest(kwargs)
 
 if __name__ == '__main__':
     http_server = pyjsonrpc.ThreadingHttpServer(
