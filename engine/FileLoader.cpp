@@ -35,6 +35,20 @@ bool FileLoader::openFile(string const& filename, std::ifstream & file)
     return false;
 }
 
+FileContent FileLoader::loadFile(ifstream & file)
+{
+    file.seekg(0, std::ios_base::end);
+    std::size_t size=file.tellg();
+    file.seekg(0, std::ios_base::beg);
+    std::string data;
+    data.resize(size+1);
+
+    file.read((char*) &data[0], size);
+    file.close();
+
+    return std::move(data);
+}
+
 Files FileLoader::getFilePaths(string const& path, Extensions const& extensions)
 {
     Files results;

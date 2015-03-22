@@ -73,7 +73,6 @@ struct VecToList
 {
     static PyObject* convert(const std::vector<T>& vec)
     {
-        cout << "VecToList" << endl;
         boost::python::list* l = new boost::python::list();
         for(size_t i = 0; i < vec.size(); i++)
             (*l).append(vec[i]);
@@ -167,7 +166,8 @@ BOOST_PYTHON_MODULE(libpycifrex)
     class_<Engine>("Engine")
             .def(init<std::vector<Vex> const&>())
             .def("ok", &Engine::ok)
-            .def("search", &Engine::search)
+            .def("searchInString", &Engine::searchInString)
             .def("searchInFile", &Engine::searchInFile)
+            .def("search", &Engine::search)
             ;
 }

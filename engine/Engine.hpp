@@ -9,7 +9,8 @@ public:
     Engine();
     Engine(std::vector<Vex> const& vexs);
     bool ok() const;
-    Matches searchInFile(std::string const& data) const;
+    Matches searchInString(std::string const& data) const;
+    Matches searchInFile(std::string const& filePath) const;
     FileMatches search(std::string const& inputPath, Extensions const& extensions) const;
 
 private:

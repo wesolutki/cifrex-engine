@@ -2,6 +2,8 @@
 #include <string>
 #include <tuple>
 
+using FileContent = std::string;
+
 using Match = std::tuple<unsigned int, unsigned int, std::string>;
 using Matches = std::vector<Match>;
 using FileMatch = std::tuple<std::string, Matches>;
