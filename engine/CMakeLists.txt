@@ -22,10 +22,12 @@ SET (SRC
     ${EXS}
 )
 
+find_package(LibRE2 REQUIRED)
+
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
 
-add_library(engine ${SRC})
-target_include_directories(engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+add_library(engine ${SRC} ${RE2_LIBRARY})
+target_include_directories(engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR} ${RE2_INCLUDE_DIR})
 
 install(TARGETS engine
         RUNTIME DESTINATION bin

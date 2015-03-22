@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(cifrex-engine)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+
 # Initialize CXXFLAGS.
 set(CMAKE_CXX_FLAGS                "-Wall -std=c++11 -lstdc++ -fPIC")
 set(CMAKE_CXX_FLAGS_DEBUG          "-O0 -g")
@@ -20,6 +22,9 @@ elseif ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
 else ()
     message(FATAL_ERROR "Your C++ compiler does not support C++11.")
 endif ()
+
+link_directories(/usr/local/lib /usr/lib/)
+include_directories(/usr/local/include /usr/lib)
 
 add_subdirectory(engine)
 add_subdirectory(python)
