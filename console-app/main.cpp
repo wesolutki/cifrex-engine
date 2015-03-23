@@ -4,7 +4,8 @@
 int main(int argc, char ** argv)
 {
     Options options(argc, argv);
-    Engine engine(options.getExs().vexs);
+    EngineOptions engineOptions(true);
+    Engine engine(engineOptions, options.getExs().vexs);
     if (engine.ok())
     {
         std::cout << "Engine loaded properly" << std::endl;

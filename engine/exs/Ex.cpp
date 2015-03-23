@@ -18,11 +18,11 @@ Ex::Ex(string regex)
     : re(new RE2(regex))
 {
     assert(re->ok());
-    cout << re->pattern() << " loaded properly" << endl;
-    for (pair<string, int> named : re->NamedCapturingGroups())
-    {
-        cout << "Capturing group named " << named.first << " was found" << endl;
-    }
+//    cout << re->pattern() << " loaded properly" << endl;
+//    for (pair<string, int> named : re->NamedCapturingGroups())
+//    {
+//        cout << "Capturing group named " << named.first << " was found" << endl;
+//    }
 }
 
 Matches Ex::match(string const& data) const
@@ -45,7 +45,7 @@ Matches Ex::match(string const& data) const
             unsigned int const offset = (input.data() - p);
             unsigned int const lineNumber = 1 + std::count(data.begin(), (data.begin() + offset), '\n');
             output.emplace_back(lineNumber, offset, strings[named.second-1]);
-            cout << "[" << lineNumber << ", " << offset << "] " << named.first << " -> " << strings[named.second-1] << endl;
+//            cout << "[" << lineNumber << ", " << offset << "] " << named.first << " -> " << strings[named.second-1] << endl;
         }
     }
     return std::move(output);

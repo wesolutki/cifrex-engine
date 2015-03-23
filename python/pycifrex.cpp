@@ -163,8 +163,12 @@ BOOST_PYTHON_MODULE(libpycifrex)
             .def("match", &Vex::match)
             ;
 
+    class_<EngineOptions>("EngineOptions")
+            .def(init<bool>())
+            .def_readwrite("verbose", &EngineOptions::verbose);
+
     class_<Engine>("Engine")
-            .def(init<std::vector<Vex> const&>())
+            .def(init<EngineOptions const&, std::vector<Vex> const&>())
             .def("ok", &Engine::ok)
             .def("searchInString", &Engine::searchInString)
             .def("searchInFile", &Engine::searchInFile)

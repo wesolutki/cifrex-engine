@@ -11,8 +11,9 @@ Engine::Engine()
 {
 }
 
-Engine::Engine(std::vector<Vex> const& exs)
-    : exs(exs)
+Engine::Engine(EngineOptions const& options, std::vector<Vex> const& exs)
+    : options(options)
+    , exs(exs)
 {
 }
 
@@ -49,11 +50,16 @@ FileMatches Engine::search(std::string const& inputPath, Extensions const& exten
             Matches const newMatches = searchInFile(filePath);
             if (!newMatches.empty())
             {
-                cout << filePath << endl;
+                if (options.verbose)
+                    cout << "Searching file matches: " << filePath << endl;
                 matches.emplace_back(filePath, newMatches);
+                if (options.verbose)
+                    for (Match const& match : newMatches)
+                        cout << "\t[" << std::get<0>(match) << ", " << std::get<1>(match) << "] \t" << std::get<2>(match) << endl;
             }
         }
     }
-    cout<<"Matches count: " << matches.size() << endl;
+    if (options.verbose)
+        cout<<"Matches count: " << matches.size() << endl;
     return matches;
 }
